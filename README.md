@@ -11,3 +11,4 @@ and this is what i made :)
 
 ![my implementation](des/1.gif)
 
+<img src="des/1.gif" height="400">
