@@ -11,8 +11,8 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 140,
-      height: 250,
-      margin: const EdgeInsets.all(10),
+      height: 260,
+      margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
       decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(15)),
           color: Colors.white,
@@ -29,13 +29,15 @@ class ProductCard extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           Positioned(
-              top: -100,
+              top: -120,
               child: SizedBox(
                   width: 140,
                   height: 250,
-                  child: Hero(tag: product.tag, child: Image.asset("${product.assets}/0001.png")))),
+                  child: Hero(tag: product.tag,
+                      child: Image.asset("${product.assets}/0040.png",
+                        fit: BoxFit.contain,)))),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(13.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,
@@ -46,8 +48,8 @@ class ProductCard extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(8)),
                     gradient: LinearGradient(
                         colors: [
-                          Color(0xff2190f9),
-                          Color(0xff2672cc)
+                          kStarGradientColor,
+                          kEndGradientColor
                         ]
 
                     )
@@ -68,7 +70,7 @@ class ProductCard extends StatelessWidget {
                   children: List.generate(5, (index) => const Icon(Icons.star, color: Colors.white, size: 13,)
                   )
                 )),
-                const SizedBox(height: 10),
+                const SizedBox(height: 15),
 
                 Text(product.brand, style: const TextStyle(color: kPrimaryTextColor, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 5),

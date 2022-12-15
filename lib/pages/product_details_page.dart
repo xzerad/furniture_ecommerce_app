@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:furniture_ecommerce_app/components/custom_icon_button.dart';
+import 'package:furniture_ecommerce_app/components/gradient_container.dart';
 import 'package:furniture_ecommerce_app/constants.dart';
 import 'package:image_sequence_animator/image_sequence_animator.dart';
 
@@ -12,19 +13,21 @@ class ProductDetails extends StatelessWidget {
   final Product product;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        elevation: 0,
+    return GradientContainer(
+      child: Scaffold(
         backgroundColor: Colors.transparent,
-        leading: CustomIconButton(child: const Icon(Icons.arrow_back, color: Colors.black54,), onPress: (){
-          Navigator.of(context).pop();
-        },),
-        actions: const [
-          CustomIconButton(child: Icon(Icons.shopping_bag_rounded, color: Colors.black54, size: 20,))
-        ],
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          leading: CustomIconButton(child: const Icon(Icons.arrow_back, color: Colors.black54,), onPress: (){
+            Navigator.of(context).pop();
+          },),
+          actions: const [
+            CustomIconButton(child: Icon(Icons.shopping_bag_rounded, color: Colors.black54, size: 20,))
+          ],
+        ),
+        body: ProductDetailsBody(product: product),
       ),
-      body: ProductDetailsBody(product: product),
     );
   }
 }
@@ -87,19 +90,18 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
                               isAutoPlay: false,
 
                               onReadyToPlay: (animator){
-                                        offlineImageSequenceAnimator = animator;
+                                        offlineImageSequenceAnimator = animator..skip(40);
                               },
-                              onPlaying: (animator){
-                              },
+
                             )
                         )),
                     Positioned(
                       bottom: -70,
-                      left: size.width/6,
+                      left: size.width/2 - 115,
                       child: CustomCurvedSlider(
                           width: size.width,
                           onChange: (x){
-                        var progress = (math.pow(x + 115, 2) / math.pow(225, 2))*80;
+                        var progress = ((x + 115) / 225)*80;
                         offlineImageSequenceAnimator?.skip(progress);
                       }),
                     )
@@ -114,57 +116,55 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
-                              flex: 3,
                               child: Text(product.name, style: const TextStyle(color: kPrimaryTextColor, fontWeight: FontWeight.bold, fontSize: 18),)),
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              padding: const EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                color: const Color(0xfff5f6fc),
-                                borderRadius: BorderRadius.circular(10)
-                              ),
-                              child: StatefulBuilder(
-                                builder: (context, setState) {
-                                  return Row(
-                                    children: [
-                                      Expanded(
-                                        flex: 4,
-                                        child: GestureDetector(
-                                          onTap: (){
-                                            if(productCountPurchase > 1){
-                                              setState((){
-                                                productCountPurchase -= 1;
-                                              });
-                                            }
-                                          },
-                                          child: const Card(
-                                            elevation: 2,
-                                            child: Icon(Icons.remove, size: 17, color: kIconPrimaryColor,),
-                                          ),
-                                        ),
-                                      ),
-                                       Expanded(
-                                          flex: 5,
-                                          child: Text("$productCountPurchase", textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.bold),)),
-                                      Expanded(
-                                        flex: 4,
-                                        child: GestureDetector(
-                                          onTap: (){
+                          Container(
+                            height: 40,
+                            width: 100,
+                            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 3),
+                            decoration: BoxDecoration(
+                              color: const Color(0xfff5f6fc),
+                              borderRadius: BorderRadius.circular(10)
+                            ),
+                            child: StatefulBuilder(
+                              builder: (context, setState) {
+                                return Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 4,
+                                      child: GestureDetector(
+                                        onTap: (){
+                                          if(productCountPurchase > 1){
                                             setState((){
-                                              productCountPurchase += 1;
+                                              productCountPurchase -= 1;
                                             });
-                                          },
-                                          child: const Card(
-                                            elevation: 2,
-                                            child: Icon(Icons.add, size: 17, color: kIconPrimaryColor,),
-                                          ),
+                                          }
+                                        },
+                                        child: const Card(
+                                          elevation: 2,
+                                          child: Icon(Icons.remove, size: 20, color: kIconPrimaryColor,),
                                         ),
                                       ),
-                                    ],
-                                  );
-                                }
-                              ),
+                                    ),
+                                     Expanded(
+                                        flex: 5,
+                                        child: Text("$productCountPurchase", textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.bold),)),
+                                    Expanded(
+                                      flex: 4,
+                                      child: GestureDetector(
+                                        onTap: (){
+                                          setState((){
+                                            productCountPurchase += 1;
+                                          });
+                                        },
+                                        child: const Card(
+                                          elevation: 2,
+                                          child: Icon(Icons.add, size: 20, color: kIconPrimaryColor,),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }
                             ),
                           )
                         ],
@@ -204,7 +204,7 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Card(
-                    color: Colors.blue.shade200,
+                    color: Colors.blue.shade300,
                     child: const Padding(
                       padding: EdgeInsets.all(5.0),
                       child: Icon(Icons.shopping_bag_rounded, color: Colors.white, size: 18,),

@@ -10,12 +10,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Furniture App',
       home: HomePage(),
     );
   }
 }
-/*26 445 012 -44 217 593-25506950
-*/
 
